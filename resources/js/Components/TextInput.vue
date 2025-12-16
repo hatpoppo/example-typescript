@@ -1,20 +1,20 @@
-<script setup>
-import { onMounted, ref } from 'vue';
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 
 const model = defineModel({
     type: String,
     required: true,
 });
 
-const input = ref(null);
+const input = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
-    if (input.value.hasAttribute('autofocus')) {
+    if (input.value && input.value.hasAttribute("autofocus")) {
         input.value.focus();
     }
 });
 
-defineExpose({ focus: () => input.value.focus() });
+defineExpose({ focus: () => input.value && input.value.focus() });
 </script>
 
 <template>
