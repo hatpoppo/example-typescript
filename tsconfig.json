@@ -44,5 +44,5 @@
         "moduleDetection": "force",
         "skipLibCheck": true
     },
-    "include": ["./resources/js/**/*"]
+    "include": ["./resources/js/*"]
 }
