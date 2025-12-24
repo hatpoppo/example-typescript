@@ -16,7 +16,8 @@
         // and npm install -D @types/node
         "paths": {
             "@/*": ["./resources/js/*"],
-            "ziggy-js": ["./vendor/tightenco/ziggy/src/js/index.d.ts"]
+            "ziggy-js": ["./vendor/tightenco/ziggy/src/js/index.d.ts"],
+            "reka-ui": ["./node_modules/reka-ui"]
         },
         // Other Outputs
         "sourceMap": true,
