@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
@@ -15,11 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm as useValidateForm } from "vee-validate";
 import * as z from "zod";
-const props = defineProps({
-    post: {
-        type: Object,
-    },
-});
+const props = defineProps<{ post: Post }>();
 
 const page = usePage();
 const form = useForm({
@@ -50,7 +46,7 @@ const { handleSubmit } = useValidateForm({
 const onSubmit = handleSubmit((values) => {
     Object.assign(form, values);
     props.post
-        ? form.patch(route("posts.update", props.post))
+        ? form.patch(route("posts.update", props.post.id))
         : form.post(route("posts.store"));
 });
 </script>

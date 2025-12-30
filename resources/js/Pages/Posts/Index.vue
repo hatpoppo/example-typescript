@@ -17,9 +17,18 @@ const props = defineProps<{ posts: paginate<Array<Post>> }>();
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Posts
-            </h2>
+            <div class="flex">
+                <h2
+                    class="flex-1 text-xl font-semibold leading-tight text-gray-800"
+                >
+                    Posts
+                </h2>
+                <Link
+                    :href="route('posts.create')"
+                    class="shadow-md bg-white rounded-xl px-4 mx-4"
+                    >新規登録</Link
+                >
+            </div>
         </template>
 
         <div class="py-12">
