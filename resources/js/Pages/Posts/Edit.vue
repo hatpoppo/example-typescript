@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm as useValidateForm } from "vee-validate";
 import * as z from "zod";
-const props = defineProps<{ post: Post }>();
+const props = defineProps<{ post: Post | null }>();
 
 const page = usePage();
 const form = useForm({

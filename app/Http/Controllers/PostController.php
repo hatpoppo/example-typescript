@@ -35,6 +35,7 @@ class PostController extends Controller
     public function create(Request $request): Response
     {
         return Inertia::render('Posts/Edit', [
+            'post' => null,
         ]);
     }
 
