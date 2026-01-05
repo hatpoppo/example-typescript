@@ -17,7 +17,8 @@
         "paths": {
             "@/*": ["./resources/js/*"],
             "ziggy-js": ["./vendor/tightenco/ziggy/src/js/index.d.ts"],
-            "reka-ui": ["./node_modules/reka-ui"]
+            "reka-ui": ["./node_modules/reka-ui"],
+            "@tanstack/vue-table": ["./node_modules/@tanstack/vue-table-ui"]
         },
         // Other Outputs
         "sourceMap": true,

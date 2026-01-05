@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Post;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,6 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('posts', PostController::class);
+    Route::get('/posts-table', function () {
+        return Inertia::render('Posts/IndexTable', [
+            'posts' => Post::with('user')->latest()->get(),
+        ]);
+    })->name('poststable');
 });
 
 require __DIR__.'/auth.php';
