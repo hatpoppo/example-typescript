@@ -1,6 +1,11 @@
 <script setup lang="ts" generic="TData, TValue">
 import type { ColumnDef } from "@tanstack/vue-table";
-import { FlexRender, getCoreRowModel, useVueTable } from "@tanstack/vue-table";
+import {
+    FlexRender,
+    getCoreRowModel,
+    useVueTable,
+    getPaginationRowModel,
+} from "@tanstack/vue-table";
 
 import {
     Table,
@@ -10,7 +15,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-
+import { Button } from "@/components/ui/button";
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -24,6 +29,7 @@ const table = useVueTable({
         return props.columns;
     },
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
 });
 </script>
 
@@ -79,5 +85,29 @@ const table = useVueTable({
                 </template>
             </TableBody>
         </Table>
+    </div>
+    <div class="flex my-2">
+        <Button
+            @click="() => table.firstPage()"
+            :disabled="!table.getCanPreviousPage()"
+            >最初へ</Button
+        >
+        <Button
+            @click="() => table.previousPage()"
+            :disabled="!table.getCanPreviousPage()"
+            class="mx-4"
+            >前へ</Button
+        >
+        <Button
+            @click="() => table.nextPage()"
+            :disabled="!table.getCanNextPage()"
+            class="mx-4"
+            >次へ</Button
+        >
+        <Button
+            @click="() => table.lastPage()"
+            :disabled="!table.getCanNextPage()"
+            >最後へ</Button
+        >
     </div>
 </template>
