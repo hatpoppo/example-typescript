@@ -4,6 +4,7 @@ import type {
     ColumnDef,
     SortingState,
     ColumnFiltersState,
+    VisibilityState,
 } from "@tanstack/vue-table";
 import {
     FlexRender,
@@ -22,6 +23,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { valueUpdater } from "@/lib/utils";
@@ -31,6 +38,7 @@ const props = defineProps<{
 }>();
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
+const columnVisibility = ref<VisibilityState>({});
 
 const table = useVueTable({
     get data() {
@@ -46,12 +54,18 @@ const table = useVueTable({
     onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
     onColumnFiltersChange: (updaterOrValue) =>
         valueUpdater(updaterOrValue, columnFilters),
+    onColumnVisibilityChange: (updaterOrValue) =>
+        valueUpdater(updaterOrValue, columnVisibility),
+
     state: {
         get sorting() {
             return sorting.value;
         },
         get columnFilters() {
             return columnFilters.value;
+        },
+        get columnVisibility() {
+            return columnVisibility.value;
         },
     },
 });
@@ -67,6 +81,31 @@ const table = useVueTable({
                 table.getColumn('title')?.setFilterValue($event)
             "
         />
+        <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+                <Button variant="outline" class="ml-auto">
+                    Columns
+                    <ChevronDown class="w-4 h-4 ml-2" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuCheckboxItem
+                    v-for="column in table
+                        .getAllColumns()
+                        .filter((column) => column.getCanHide())"
+                    :key="column.id"
+                    class="capitalize"
+                    :modelValue="column.getIsVisible()"
+                    @update:modelValue="
+                        (value) => {
+                            column.toggleVisibility(!!value);
+                        }
+                    "
+                >
+                    {{ column.id }}
+                </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     </div>
     <div class="border rounded-md">
         <Table>
