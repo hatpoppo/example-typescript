@@ -39,6 +39,7 @@ const props = defineProps<{
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnVisibility = ref<VisibilityState>({});
+const rowSelection = ref({});
 
 const table = useVueTable({
     get data() {
@@ -56,6 +57,8 @@ const table = useVueTable({
         valueUpdater(updaterOrValue, columnFilters),
     onColumnVisibilityChange: (updaterOrValue) =>
         valueUpdater(updaterOrValue, columnVisibility),
+    onRowSelectionChange: (updaterOrValue) =>
+        valueUpdater(updaterOrValue, rowSelection),
 
     state: {
         get sorting() {
@@ -66,6 +69,9 @@ const table = useVueTable({
         },
         get columnVisibility() {
             return columnVisibility.value;
+        },
+        get rowSelection() {
+            return rowSelection.value;
         },
     },
 });
@@ -160,6 +166,10 @@ const table = useVueTable({
         </Table>
     </div>
     <div class="flex my-2">
+        <div class="flex-1 text-sm text-muted-foreground">
+            {{ table.getFilteredSelectedRowModel().rows.length }} of
+            {{ table.getFilteredRowModel().rows.length }} row(s) selected.
+        </div>
         <Button
             @click="() => table.firstPage()"
             :disabled="!table.getCanPreviousPage()"

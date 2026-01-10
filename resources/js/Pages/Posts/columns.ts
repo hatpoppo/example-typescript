@@ -3,6 +3,7 @@ import type { ColumnDef } from "@tanstack/vue-table";
 import { ArrowUpDown, ArrowDown, ArrowUp } from "lucide-vue-next";
 import DropdownAction from "@/Components/DataTableDropDown.vue";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const displaySortIcon = (sotrted: string | boolean) => {
     if (sotrted === "asc") {
@@ -15,6 +16,25 @@ const displaySortIcon = (sotrted: string | boolean) => {
 };
 
 export const columns: ColumnDef<Post>[] = [
+    {
+        id: "select",
+        header: ({ table }) =>
+            h(Checkbox, {
+                modelValue: table.getIsAllPageRowsSelected(),
+                "onUpdate:modelValue": (value: boolean) =>
+                    table.toggleAllPageRowsSelected(!!value),
+                ariaLabel: "Select all",
+            }),
+        cell: ({ row }) =>
+            h(Checkbox, {
+                modelValue: row.getIsSelected(),
+                "onUpdate:modelValue": (value: boolean) =>
+                    row.toggleSelected(!!value),
+                ariaLabel: "Select row",
+            }),
+        enableSorting: false,
+        enableHiding: false,
+    },
     {
         accessorKey: "title",
         header: ({ column }) => {
