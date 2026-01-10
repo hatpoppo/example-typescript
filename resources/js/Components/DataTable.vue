@@ -1,12 +1,17 @@
 <script setup lang="ts" generic="TData, TValue">
 import { h, ref } from "vue";
-import type { ColumnDef, SortingState } from "@tanstack/vue-table";
+import type {
+    ColumnDef,
+    SortingState,
+    ColumnFiltersState,
+} from "@tanstack/vue-table";
 import {
     FlexRender,
     getCoreRowModel,
     useVueTable,
     getPaginationRowModel,
     getSortedRowModel,
+    getFilteredRowModel,
 } from "@tanstack/vue-table";
 
 import {
@@ -18,12 +23,14 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { valueUpdater } from "@/lib/utils";
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
 }>();
 const sorting = ref<SortingState>([]);
+const columnFilters = ref<ColumnFiltersState>([]);
 
 const table = useVueTable({
     get data() {
@@ -35,16 +42,32 @@ const table = useVueTable({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
+    onColumnFiltersChange: (updaterOrValue) =>
+        valueUpdater(updaterOrValue, columnFilters),
     state: {
         get sorting() {
             return sorting.value;
+        },
+        get columnFilters() {
+            return columnFilters.value;
         },
     },
 });
 </script>
 
 <template>
+    <div class="flex items-center py-4">
+        <Input
+            class="max-w-sm"
+            placeholder="Filter titles..."
+            :model-value="table.getColumn('title')?.getFilterValue() as string"
+            @update:model-value="
+                table.getColumn('title')?.setFilterValue($event)
+            "
+        />
+    </div>
     <div class="border rounded-md">
         <Table>
             <TableHeader>
