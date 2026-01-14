@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
-import { ref } from "vue";
 import { columns } from "./columns";
 import DataTable from "@/Components/DataTable.vue";
 
 const props = defineProps<{ posts: Array<Post> }>();
-const data = ref<Post[]>([]);
 </script>
 
 <template>
@@ -18,8 +16,13 @@ const data = ref<Post[]>([]);
                 <h2
                     class="flex-1 text-xl font-semibold leading-tight text-gray-800"
                 >
-                    PostsTable
+                    Posts
                 </h2>
+                <Link
+                    :href="route('posts.create')"
+                    class="shadow-md bg-white rounded-xl px-4 mx-4"
+                    >新規登録</Link
+                >
             </div>
         </template>
 

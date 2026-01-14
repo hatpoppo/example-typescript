@@ -80,9 +80,9 @@ const showingNavigationDropdown = ref(false);
                                             Psots
                                         </DropdownLink>
                                         <DropdownLink
-                                            :href="route('poststable')"
+                                            :href="route('postssimple')"
                                         >
-                                            PsotsTable
+                                            PsotsSimple
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
@@ -174,8 +174,8 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('posts.index')">
                                 Psots
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('poststable')">
-                                PsotsTable
+                            <ResponsiveNavLink :href="route('postssimple')">
+                                PsotsSimple
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 :href="route('logout')"

@@ -21,7 +21,7 @@ const props = defineProps<{ posts: paginate<Array<Post>> }>();
                 <h2
                     class="flex-1 text-xl font-semibold leading-tight text-gray-800"
                 >
-                    Posts
+                    PostsSimple
                 </h2>
                 <Link
                     :href="route('posts.create')"
