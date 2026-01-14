@@ -32,6 +32,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { valueUpdater } from "@/lib/utils";
+import { ChevronDown } from "lucide-vue-next";
+
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
