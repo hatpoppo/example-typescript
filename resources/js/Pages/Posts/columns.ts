@@ -45,7 +45,7 @@ export const columns: ColumnDef<Post>[] = [
                     onClick: () =>
                         column.toggleSorting(column.getIsSorted() === "asc"),
                 },
-                () => ["タイトル", displaySortIcon(column.getIsSorted())]
+                () => ["タイトル", displaySortIcon(column.getIsSorted())],
             );
         },
         cell: ({ row }) =>
@@ -61,7 +61,7 @@ export const columns: ColumnDef<Post>[] = [
                     onClick: () =>
                         column.toggleSorting(column.getIsSorted() === "asc"),
                 },
-                () => ["抜粋", displaySortIcon(column.getIsSorted())]
+                () => ["抜粋", displaySortIcon(column.getIsSorted())],
             );
         },
         cell: ({ row }) =>
@@ -71,8 +71,14 @@ export const columns: ColumnDef<Post>[] = [
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-            const data = row.original;
-            return h("div", { class: "relative" }, h(DropdownAction, { data }));
+            const post = row.original;
+            return h(
+                "div",
+                { class: "relative" },
+                h(DropdownAction, {
+                    post,
+                }),
+            );
         },
     },
 ];
