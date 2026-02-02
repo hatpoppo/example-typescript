@@ -3,7 +3,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 import { columns } from "./columns";
 import DataTable from "@/Components/DataTable.vue";
+import Edit from "@/Components/Posts/Edit.vue";
+import { useTemplateRef } from "vue";
+import { Button } from "@/components/ui/button";
 
+const editPostRef = useTemplateRef("editPost");
+function openSheet() {
+    editPostRef.value.openSheet();
+}
 const props = defineProps<{ posts: Array<Post> }>();
 </script>
 
@@ -11,6 +18,7 @@ const props = defineProps<{ posts: Array<Post> }>();
     <Head title="Posts" />
 
     <AuthenticatedLayout>
+        <Edit :post="null" ref="editPost" />
         <template #header>
             <div class="flex">
                 <h2
@@ -18,11 +26,7 @@ const props = defineProps<{ posts: Array<Post> }>();
                 >
                     Posts
                 </h2>
-                <Link
-                    :href="route('posts.create')"
-                    class="shadow-md bg-white rounded-xl px-4 mx-4"
-                    >新規登録</Link
-                >
+                <Button @click="openSheet()">新規登録</Button>
             </div>
         </template>
 
